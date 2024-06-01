@@ -94,6 +94,10 @@ export default function Game() {
         <div style={{margin: '0 0 0 100px'}}>
         <FilterableProductTable products={PRODUCTS} />                  
         </div>
+
+        <div style={{margin: '0 0 0 100px'}}>
+        <Card imageUrl={'https://reactjs.org/logo-og.png'} name={'React'} />                  
+        </div>
     </div>
   );
 }
@@ -206,3 +210,23 @@ const PRODUCTS = [
   {category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin"},
   {category: "Vegetables", price: "$1", stocked: true, name: "Peas"}
 ];
+
+// codium
+function Card({ imageUrl, name }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className="card"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className={isHovered ? "card-face card-back" : "card-face card-front"}>
+        <img src={imageUrl} alt={name} />
+      </div>
+      <div className={isHovered ? "card-face card-front" : "card-face card-back"}>
+        <h2>{name}</h2>
+      </div>
+    </div>
+  );
+}
