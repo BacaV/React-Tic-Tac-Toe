@@ -84,6 +84,7 @@ export default function Game() {
 
   return (
     <div className="game">
+      < Navbar />
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
@@ -228,5 +229,26 @@ function Card({ imageUrl, name }) {
         <h2>{name}</h2>
       </div>
     </div>
+  );
+}
+
+
+function Navbar() {
+  return (
+    <nav style={{
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      backgroundColor: '#f9f9f9',
+      padding: '10px 20px',
+      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+    }}>
+      <img src="logo.png" alt="Logo" style={{ height: '40px' }} />
+      <div style={{ display: 'flex', fontSize: '18px' }}>
+        <a href="/" style={{ margin: '0 10px' }}>Home</a>
+        <a href="/about" style={{ margin: '0 10px' }}>About</a>
+        <a href="/contact" style={{ margin: '0 10px' }}>Contact</a>
+      </div>
+    </nav>
   );
 }
