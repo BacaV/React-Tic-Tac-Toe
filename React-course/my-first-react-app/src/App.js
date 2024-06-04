@@ -84,7 +84,6 @@ export default function Game() {
 
   return (
     <div className="game">
-      < Navbar />
       <div className="game-board">
         <Board xIsNext={xIsNext} squares={currentSquares} onPlay={handlePlay} />
       </div>
@@ -96,9 +95,6 @@ export default function Game() {
         <FilterableProductTable products={PRODUCTS} />                  
         </div>
 
-        <div style={{margin: '0 0 0 100px'}}>
-        <Card imageUrl={'https://reactjs.org/logo-og.png'} name={'React'} />                  
-        </div>
     </div>
   );
 }
@@ -181,12 +177,12 @@ function ProductTable({ products }) {
   );
 }
 
-function SearchBar() {
+function SearchBar({filterText, inStockOnly, onFilterTextChange, onInStockOnlyChange}) {
   return (
     <form>
-      <input type="text" placeholder="Search..." />
+      <input type="text" value={filterText} onChange={(e) => onFilterTextChange(e.target.value)} placeholder="Search..." />
       <label>
-        <input type="checkbox" />
+        <input type="checkbox" onChange={(e) => onInStockOnlyChange(e.target.checked)} />
         {' '}
         Only show products in stock
       </label>
@@ -195,10 +191,14 @@ function SearchBar() {
 }
 
 function FilterableProductTable({ products }) {
+
+  const [filterText, setFilterText] = useState('');
+  const [inStockOnly, setInStockOnly] = useState(false);
+
   return (
     <div>
-      <SearchBar />
-      <ProductTable products={products} />
+      <SearchBar filterText={filterText} inStockOnly={inStockOnly} onFilterTextChange={setFilterText} onInStockOnlyChange={setInStockOnly} />
+      <ProductTable products={products} filterText={filterText} inStockOnly={inStockOnly} />
     </div>
   );
 }
@@ -212,43 +212,4 @@ const PRODUCTS = [
   {category: "Vegetables", price: "$1", stocked: true, name: "Peas"}
 ];
 
-// codium
-function Card({ imageUrl, name }) {
-  const [isHovered, setIsHovered] = useState(false);
 
-  return (
-    <div
-      className="card"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
-      <div className={isHovered ? "card-face card-back" : "card-face card-front"}>
-        <img src={imageUrl} alt={name} />
-      </div>
-      <div className={isHovered ? "card-face card-front" : "card-face card-back"}>
-        <h2>{name}</h2>
-      </div>
-    </div>
-  );
-}
-
-
-function Navbar() {
-  return (
-    <nav style={{
-      display: 'flex',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      backgroundColor: '#f9f9f9',
-      padding: '10px 20px',
-      boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
-    }}>
-      <img src="logo.png" alt="Logo" style={{ height: '40px' }} />
-      <div style={{ display: 'flex', fontSize: '18px' }}>
-        <a href="/" style={{ margin: '0 10px' }}>Home</a>
-        <a href="/about" style={{ margin: '0 10px' }}>About</a>
-        <a href="/contact" style={{ margin: '0 10px' }}>Contact</a>
-      </div>
-    </nav>
-  );
-}
